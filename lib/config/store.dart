@@ -46,6 +46,18 @@ class AppStore extends GetxController {
 
     testVault.addEntry(entry);
 
+    entry = VaultEntry("yahoo account", template.id);
+    entry.idTemplate = template.id;
+
+    entry.addValueByName("email", "test@yahoo.com");
+    entry.addValueByName("password", "test-password");
+    entry.addValueByName("imap", "imap.yahoo.com");
+    entry.addValueByName("smtp", "smtp.yahoo.com");
+    entry.addValueByName("imap_port", "993");
+    entry.addValueByName("smtp_port", "587");
+
+    testVault.addEntry(entry);
+
     print("=== DEMO OK");
   }
 }

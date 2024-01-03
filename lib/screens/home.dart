@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:paranoid_password_manager/config/store.dart';
+import 'package:paranoid_password_manager/models/vault.dart';
+import 'package:paranoid_password_manager/models/vault_entry.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Vault get vault => appStore.value.vault.value;
+  List<VaultEntry> get entries => vault.entries;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +29,10 @@ class HomeScreen extends StatelessWidget {
         // Add any other app bar customization here
       ),
       body: ListView.builder(
-        itemCount: 100,
+        itemCount: entries.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('Item $index'),
+            title: Text(entries[index].title),
           );
         },
       ),

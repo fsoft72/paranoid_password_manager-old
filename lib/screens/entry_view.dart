@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paranoid_password_manager/models/field_description.dart';
 import 'package:paranoid_password_manager/models/form_template.dart';
@@ -52,26 +53,40 @@ class EntryView extends StatelessWidget {
               fontSize: 12,
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Obx(() => Text(
-                      showValue.value ? value : '•' * value.length,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
-                    )),
-              ),
-              if (isSensitive)
-                IconButton(
-                  icon: Obx(() => Icon(showValue.value ? Icons.visibility : Icons.visibility_off)),
-                  onPressed: () {
-                    showValue.value = !showValue.value;
-                  },
+          GestureDetector(
+            onTap: () {
+              Get.snackbar(
+                'Clipboard ready',
+                '${field.name} copied to clipboard',
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 3),
+                backgroundColor: Colors.green,
+              );
+              Clipboard.setData(
+                ClipboardData(text: value),
+              );
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  child: Obx(() => Text(
+                        showValue.value ? value : '•' * value.length,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      )),
                 ),
-            ],
+                if (isSensitive)
+                  IconButton(
+                    icon: Obx(() => Icon(showValue.value ? Icons.visibility : Icons.visibility_off)),
+                    onPressed: () {
+                      showValue.value = !showValue.value;
+                    },
+                  ),
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
         ],
       );
     }

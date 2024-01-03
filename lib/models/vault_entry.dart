@@ -1,8 +1,6 @@
 import 'package:paranoid_password_manager/config/store.dart';
 import 'package:paranoid_password_manager/models/field_description.dart';
 import 'package:paranoid_password_manager/models/form_template.dart';
-import 'package:paranoid_password_manager/models/template_manager.dart';
-import 'package:paranoid_password_manager/models/vault.dart';
 import 'package:paranoid_password_manager/utils.dart';
 
 class VaultEntry {

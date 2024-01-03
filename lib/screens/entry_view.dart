@@ -11,9 +11,41 @@ class EntryView extends StatelessWidget {
   Widget build(BuildContext context) {
     FormTemplate template = vaultEntry.form;
 
+		Widget _menu () {
+          return PopupMenuButton(
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 1,
+                child: Text('Option 1'),
+              ),
+              const PopupMenuItem(
+                value: 2,
+                child: Text('Option 2'),
+              ),
+              const PopupMenuItem(
+                value: 3,
+                child: Text('Option 3'),
+              ),
+            ],
+            icon: const Icon(Icons.more_vert),
+            onSelected: (value) {
+              // Add your menu button logic here
+            },
+          ),
+		}
+
     return Scaffold(
       appBar: AppBar(
         title: Text(vaultEntry.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              // Add your edit button logic here
+            },
+          ),
+					_menu(),
+        ],
       ),
       body: Column(
         children: [

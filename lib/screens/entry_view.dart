@@ -1,4 +1,8 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:paranoid_password_manager/models/field_description.dart';
 import 'package:paranoid_password_manager/models/form_template.dart';
 import 'package:paranoid_password_manager/models/vault_entry.dart';
 
@@ -11,28 +15,66 @@ class EntryView extends StatelessWidget {
   Widget build(BuildContext context) {
     FormTemplate template = vaultEntry.form;
 
-		Widget _menu () {
-          return PopupMenuButton(
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
-                value: 1,
-                child: Text('Option 1'),
-              ),
-              const PopupMenuItem(
-                value: 2,
-                child: Text('Option 2'),
-              ),
-              const PopupMenuItem(
-                value: 3,
-                child: Text('Option 3'),
-              ),
-            ],
-            icon: const Icon(Icons.more_vert),
-            onSelected: (value) {
-              // Add your menu button logic here
-            },
+    Widget _menu() {
+      return PopupMenuButton(
+        itemBuilder: (BuildContext context) => [
+          const PopupMenuItem(
+            value: 1,
+            child: Text('Option 1'),
           ),
-		}
+          const PopupMenuItem(
+            value: 2,
+            child: Text('Option 2'),
+          ),
+          const PopupMenuItem(
+            value: 3,
+            child: Text('Option 3'),
+          ),
+        ],
+        icon: const Icon(Icons.more_vert),
+        onSelected: (value) {
+          // Add your menu button logic here
+        },
+      );
+    }
+
+    Widget _buildField(FieldDescription field, String value) {
+      bool isSensitive = field.sensitive;
+      final RxBool showValue = isSensitive ? false.obs : true.obs;
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            field.name,
+            style: const TextStyle(
+              color: Colors.blue,
+              fontSize: 12,
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Obx(() => Text(
+                      showValue.value ? value : '•' * value.length,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    )),
+              ),
+              if (isSensitive)
+                IconButton(
+                  icon: Obx(() => Icon(showValue.value ? Icons.visibility : Icons.visibility_off)),
+                  onPressed: () {
+                    showValue.value = !showValue.value;
+                  },
+                ),
+            ],
+          ),
+          const SizedBox(height: 8),
+        ],
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +86,7 @@ class EntryView extends StatelessWidget {
               // Add your edit button logic here
             },
           ),
-					_menu(),
+          _menu(),
         ],
       ),
       body: Column(
@@ -58,25 +100,7 @@ class EntryView extends StatelessWidget {
                   final field = template.fields[index];
                   final value = vaultEntry.values[field.id] ?? '';
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        field.name,
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        value,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  );
+                  return _buildField(field, value);
                 },
               ),
             ),

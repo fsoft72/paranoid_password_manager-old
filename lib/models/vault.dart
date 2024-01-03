@@ -39,7 +39,7 @@ class Vault {
 
   String toJson() {
     String json = jsonEncode({
-      // "templates": _templateManager.toJson(),
+      "templates": _templateManager.toJson(),
       "entries": _entries.map((e) => e.toJson()).toList(),
     });
 

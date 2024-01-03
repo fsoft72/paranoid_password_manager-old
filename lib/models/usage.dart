@@ -1,4 +1,7 @@
 // test the vault usage
+import 'dart:io';
+
+import 'package:paranoid_password_manager/config/env.dart';
 import 'package:paranoid_password_manager/models/form_template.dart';
 import 'package:paranoid_password_manager/models/vault_entry.dart';
 import 'package:paranoid_password_manager/models/vault.dart';
@@ -43,6 +46,14 @@ void testUsage() {
   print("=== Vault: " + json);
 
   final vault2 = Vault.fromJson(json);
+  print("=== Vault2: " + vault2.toJson());
+
+  if (DEBUG_MODE == true && LINUX == true) {
+    // Save the vault to a file
+    final file = File("/ramdisk/vault.json");
+    file.writeAsStringSync(json);
+  }
+
   print("=== Vault2: " + vault2.toJson());
 
 /*

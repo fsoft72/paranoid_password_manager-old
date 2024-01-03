@@ -10,6 +10,9 @@ class FormTemplate {
   // create an empty FormTemplate object
   FormTemplate([this.name = '']);
 
+  // return the fields list
+  List<FieldDescription> get fields => _fields;
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -34,7 +37,7 @@ class FormTemplate {
   }
 
   // return the FieldDescription object with the given name
-  FieldDescription? getByName(String fieldNName) {
+  FieldDescription? getByName(String name) {
     name = name.toLowerCase();
     return _fields.firstWhere((element) => element.name == name);
   }

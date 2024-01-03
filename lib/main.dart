@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:paranoid_password_manager/screens/home.dart';
 import 'package:paranoid_password_manager/config/store.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     appStore.value.loadVault();
     appStore.value.createVaultDemo();
 
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Paranoid Password Manager',
       theme: ThemeData.dark(),
       home: const HomeScreen(),

@@ -43,9 +43,9 @@ void testUsage() {
   print("=== Vault: " + json);
 
   final vault2 = Vault.fromJson(json);
-/*
-  print("=== Vault2: " + vault2.encryptedVault);
+  print("=== Vault2: " + vault2.toJson());
 
+/*
   final entry2 = vault2.entries[0];
   print("=== entry2: " + entry2.title);
   print("=== entry2: " + entry2.values[fdEmail.id]!);

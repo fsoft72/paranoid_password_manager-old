@@ -31,8 +31,10 @@ class TemplateManager {
     return template;
   }
 
-  FormTemplate getTemplate(String id) {
-    return _templates[id]!;
+  FormTemplate? getTemplate(String id) {
+    FormTemplate? template = _templates[id];
+
+    return template;
   }
 
   List<dynamic> toJson() {

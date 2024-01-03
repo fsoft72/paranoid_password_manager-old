@@ -74,4 +74,8 @@ class Vault {
 
     _templateManager.fromJson(map['templates']);
   }
+
+  FormTemplate? getTemplate(String id) {
+    return _templateManager.getTemplate(id);
+  }
 }

@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     appStore.value.loadVault();
+    appStore.value.createVaultDemo();
 
     return MaterialApp(
       title: 'Paranoid Password Manager',

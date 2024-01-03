@@ -1,5 +1,8 @@
+import 'package:paranoid_password_manager/config/store.dart';
 import 'package:paranoid_password_manager/models/field_description.dart';
 import 'package:paranoid_password_manager/models/form_template.dart';
+import 'package:paranoid_password_manager/models/template_manager.dart';
+import 'package:paranoid_password_manager/models/vault.dart';
 import 'package:paranoid_password_manager/utils.dart';
 
 class VaultEntry {
@@ -10,14 +13,11 @@ class VaultEntry {
 
   late FormTemplate form;
 
-  // create a constructor that takes only title as a parameter
-  // and set the id to a unique string
-  // and set the dataDescription to an empty list
-  // and set the values to an empty map
-  VaultEntry(this.title) {
+  VaultEntry(this.title, this.idTemplate) {
     id = generateID();
     values = {};
-    idTemplate = "";
+
+    form = appStore.value.vault.value.getTemplate(idTemplate)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -30,7 +30,7 @@ class VaultEntry {
   }
 
   factory VaultEntry.fromJson(Map<String, dynamic> json) {
-    final VaultEntry entry = VaultEntry(json['title']);
+    final VaultEntry entry = VaultEntry(json['title'], json['idTemplate']);
     entry.id = json['id'];
     entry.title = json['title'];
     entry.idTemplate = json['idTemplate'];
@@ -70,6 +70,13 @@ class VaultEntry {
   // add a new value to the values map
   void addValue(String idFormField, dynamic value) {
     values[idFormField] = value;
+  }
+
+  void addValueByName(String fieldName, dynamic value) {
+    final fd = form.getByName(fieldName);
+    if (fd != null) {
+      values[fd.id] = value;
+    }
   }
 
   bool match(String query) {

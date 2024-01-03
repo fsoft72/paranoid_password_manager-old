@@ -17,7 +17,7 @@ void testUsage() {
   final fdIMAPPort = template.add(name: "imap_port", type: "number");
   final fdSMTPPort = template.add(name: "smtp_port", type: "number");
 
-  VaultEntry entry = VaultEntry("gmail account");
+  VaultEntry entry = VaultEntry("gmail account", template.id);
   entry.idTemplate = template.id;
 
   entry.addValue(fdEmail.id, "test@gmail.com");
@@ -29,7 +29,7 @@ void testUsage() {
 
   vault.addEntry(entry);
 
-  entry = VaultEntry("hotmail account");
+  entry = VaultEntry("hotmail account", template.id);
   entry.idTemplate = template.id;
 
   entry.addValue(fdEmail.id, "test@hotmail.com");

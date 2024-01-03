@@ -1,6 +1,4 @@
 // create the FormTemplate class
-import 'dart:convert';
-
 import 'package:paranoid_password_manager/models/field_description.dart';
 import 'package:paranoid_password_manager/utils.dart';
 
@@ -15,7 +13,7 @@ class FormTemplate {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'name': name.toLowerCase(),
       'fields': _fields.map((e) => e.toJson()).toList(),
     };
   }
@@ -36,7 +34,8 @@ class FormTemplate {
   }
 
   // return the FieldDescription object with the given name
-  FieldDescription getByName(String name) {
+  FieldDescription? getByName(String fieldNName) {
+    name = name.toLowerCase();
     return _fields.firstWhere((element) => element.name == name);
   }
 
@@ -50,7 +49,7 @@ class FormTemplate {
     final String id = generateID();
     final field = FieldDescription(
       id: id,
-      name: name,
+      name: name.toLowerCase(),
       type: type,
       sensitive: sensitive,
       url: url,
